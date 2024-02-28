@@ -62,5 +62,33 @@ namespace be_5_g_3.Controllers
 
             return RedirectToAction("Details", new { id = articolo.Id });
         }
+        [HttpGet]
+        public IActionResult Edit([FromRoute] int? id)
+        {
+            if (id.HasValue)
+            {
+                var art = Db.GetById(id);
+                if (art is null)
+                {
+                    return View("Error");
+                }
+                return View(art);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Articolo");
+            }
+
+        }
+
+        [HttpPost]
+
+        public IActionResult Edit(Articolo articolo)
+        {
+            var updateArt = Db.Edit(articolo);
+            if (updateArt is null) return View("Error");
+            return RedirectToAction("Details", new { id = articolo.Id });
+        }
     }
+
     }
