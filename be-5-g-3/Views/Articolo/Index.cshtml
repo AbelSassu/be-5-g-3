@@ -1,0 +1,42 @@
+﻿@section Title{
+    Lista Prodotti
+}
+
+<div class="row">
+    @if (Model.Count == 1)
+    {
+        <h3>Non ci sono prodotti</h3>
+    }
+
+    else
+    {
+        @foreach (var art in Model)
+        {
+                     <div class="col">
+
+                <div class="card">
+                    <img src="@art.ImgCover" class="card-img-top" alt="@art.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@art.Name</h5>
+                        <p class="card-text">@art.Description</p>
+                        <p class="card-text">@art.Price</p>
+                        <div class="d-flex">
+                            <form asp-action="SoftDelete" method="post">
+                                <input type="hidden" name="ArtId" value="@art.Id"/>
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            </form>
+                            <a class="btn btn-primary" asp-area="" asp-controller="Articolo" asp-action="Details" asp-route-id=@art.Id>Details</a>
+                        </div>
+ 
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+
+
+
+
+</div>
