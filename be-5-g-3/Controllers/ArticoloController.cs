@@ -22,7 +22,8 @@ namespace be_5_g_3.Controllers
                 }
                 return View(art);
             }
-            else {
+            else
+            {
                 return RedirectToAction("Index", "Articolo");
             }
 
@@ -32,7 +33,7 @@ namespace be_5_g_3.Controllers
         {
             return View();
         }
-        [HttpGet]
+        [HttpPost]
         public IActionResult Add(string name, string descrizione, double price, string imgCover, string img1, string img2)
         {
             Articolo articolo = new Articolo();
@@ -40,10 +41,26 @@ namespace be_5_g_3.Controllers
             articolo.Description = descrizione;
             articolo.Price = price;
             articolo.ImgCover = imgCover;
-            articolo.ImgDetails[0] = img1;
-            articolo.ImgDetails[1] = img2;
+
+            if (articolo.ImgDetails == null)
+            {
+                articolo.ImgDetails = new List<string>();
+            }
+
+            if (articolo.ImgDetails.Count < 2)
+            {
+                articolo.ImgDetails.Add(img1);
+                articolo.ImgDetails.Add(img2);
+            }
+            else
+            {
+                articolo.ImgDetails[0] = img1;
+                articolo.ImgDetails[1] = img2;
+            }
+
             Db.Add(articolo);
 
-            return RedirectToAction("Details", new {id = articolo.Id});      }
+            return RedirectToAction("Details", new { id = articolo.Id });
+        }
     }
-}
+    }
